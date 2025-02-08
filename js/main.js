@@ -91,4 +91,4 @@ function generatePhotos() {
 
 const photoArray = generatePhotos();
 
-export const photoArray = photoArray
+export {photoArray};
