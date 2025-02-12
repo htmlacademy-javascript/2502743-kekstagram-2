@@ -10,7 +10,7 @@
  * @param {photoArray} - генерирует случайный объект из массива
  */
 
-import {photoArray} from './main.js4';
+import {photoArray} from './main.js';
 
 function getRandomInteger(min, max) {
   return Math.floor(Math.random()
