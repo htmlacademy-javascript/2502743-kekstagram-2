@@ -45,18 +45,19 @@ function stringToNumber(str) {
 stringToNumber('rwgdh663');
 
 /**
- * @param checkMeetingTime - регистрирует продолжительность встречи в рабочее время
+ * регистрирует продолжительность встречи в рабочее время
  * @param {*} str - строка
  * @param toMinutes - разбивает строку времени на часы и минуты и переводит в общее количество с начала суток
  * @return {number} - проверяем что встреча начинается не раьше рабочего дня и заканчивается не позже его окончания
  */
 
-function checkMeetingTime(workStartStr, workEndStr, meetingStartStr, duration) {
+function checkMeetingTimeMeetingTime(workStartStr, workEndStr, meetingStartStr, duration) {
   const toMinutes = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
     return hours * 60 + minutes;
   };
 
+  const HOUR_IN_MINUTES = 60;
   const workStart = toMinutes(workStartStr);
   const workEnd = toMinutes(workEndStr);
   const meetingStart = toMinutes(meetingStartStr);
