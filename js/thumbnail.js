@@ -18,4 +18,6 @@ const renderThumbnails = (photos, container) => {
   container.appendChild(fragment);
 };
 
+thumbnail.addEventListener('click', () => openBigPicture(photo));
+
 export { renderThumbnails };
