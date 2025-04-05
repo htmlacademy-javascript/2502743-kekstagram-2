@@ -54,10 +54,10 @@ stringToNumber('rwgdh663');
 function checkMeetingTimeMeetingTime(workStartStr, workEndStr, meetingStartStr, duration) {
   const toMinutes = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
+    const HOUR_IN_MINUTES = 60;
     return hours * 60 + minutes;
   };
 
-  const HOUR_IN_MINUTES = 60;
   const workStart = toMinutes(workStartStr);
   const workEnd = toMinutes(workEndStr);
   const meetingStart = toMinutes(meetingStartStr);
