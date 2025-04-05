@@ -76,3 +76,18 @@ function onCloseButtonClick(evt) {
 export { openBigPicture };
 
 
+// thumbnail.js (дополнение)
+const renderThumbnails = (photos, container) => {
+  const fragment = document.createDocumentFragment();
+
+  photos.forEach((photo) => {
+    const thumbnail = createThumbnail(photo);
+    thumbnail.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openBigPicture(photo); // Импортированная функция из big-picture.js
+    });
+    fragment.appendChild(thumbnail);
+  });
+
+  container.appendChild(fragment);
+};
