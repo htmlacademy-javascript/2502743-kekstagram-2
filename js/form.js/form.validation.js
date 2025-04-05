@@ -89,3 +89,46 @@ const initFormValidation = () => {
 };
 
 export { initFormValidation };
+
+import { sendPhotoData } from './api.js';
+import { closeModal, showSuccessMessage, showErrorMessage } from './utils.js';
+
+const form = document.querySelector('.img-upload__form');
+const submitButton = form.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const onFormSubmit = async (evt) => {
+  evt.preventDefault();
+
+  if (!pristine.validate()) {
+    return;
+  }
+
+  const formData = new FormData(form);
+
+  try {
+    blockSubmitButton();
+    await sendPhotoData(formData);
+    closeForm();
+    showSuccessMessage();
+  } catch (error) {
+    showErrorMessage(error.message);
+  } finally {
+    unblockSubmitButton();
+  }
+};
+
+const closeForm = () => {
+  form.reset();
+  closeModal();
+  resetEffects();
+};
