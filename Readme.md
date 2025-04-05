@@ -3,7 +3,6 @@
 * Студент: [Oleksandr Shkola](https://up.htmlacademy.ru/javascript-individual/2/user/2502743).
 * Наставник: `Anton Popov`
 
-
 ---
 
 _Не удаляйте и не изменяйте самовольно файлы и папки:_

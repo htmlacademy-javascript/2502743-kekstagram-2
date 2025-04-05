@@ -75,6 +75,7 @@ function onCloseButtonClick(evt) {
 
 export { openBigPicture };
 
+
 // thumbnail.js (дополнение)
 const renderThumbnails = (photos, container) => {
   const fragment = document.createDocumentFragment();
