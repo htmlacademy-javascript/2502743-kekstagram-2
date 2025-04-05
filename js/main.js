@@ -30,3 +30,21 @@ const mockPhotos = [
 renderThumbnails(mockPhotos, picturesContainer);
 
 const photoArray = generatePhotos();
+
+import { initFormValidation } from './form-validation.js';
+
+initFormValidation();
+
+import { initImageEditor, closeImageEditor } from './image-editor.js';
+
+// При открытии формы
+const openImageEditor = () => {
+  initImageEditor();
+  // ... другая логика инициализации
+};
+
+// При закрытии формы
+const onCloseButtonClick = () => {
+  closeImageEditor();
+  // ... другая логика закрытия
+};
