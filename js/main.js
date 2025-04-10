@@ -35,7 +35,7 @@ import { initFormValidation } from './form-validation.js';
 
 initFormValidation();
 
-import { initImageEditor, closeImageEditor } from './image-editor.js';
+import { initImageEditor, closeImageEditor } from 'form.js/image-editor.js';
 
 // При открытии формы
 const openImageEditor = () => {
