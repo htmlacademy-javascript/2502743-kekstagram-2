@@ -31,11 +31,11 @@ renderThumbnails(mockPhotos, picturesContainer);
 
 const photoArray = generatePhotos();
 
-import { initFormValidation } from 'form.js/form-validation.js';
+import { initFormValidation } from 'form./form-validation.js';
 
 initFormValidation();
 
-import { initImageEditor, closeImageEditor } from 'form.js/image-editor.js';
+import { initImageEditor, closeImageEditor } from 'form./image-editor.js';
 
 // При открытии формы
 const openImageEditor = () => {
