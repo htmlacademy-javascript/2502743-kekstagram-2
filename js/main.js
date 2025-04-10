@@ -31,7 +31,7 @@ renderThumbnails(mockPhotos, picturesContainer);
 
 const photoArray = generatePhotos();
 
-import { initFormValidation } from './form-validation.js';
+import { initFormValidation } from 'form.js/form-validation.js';
 
 initFormValidation();
 
