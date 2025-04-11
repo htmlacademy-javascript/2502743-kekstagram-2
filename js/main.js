@@ -10,13 +10,13 @@
  * @param {photoArray} - генерирует случайный объект из массива
  */
 
-import { generatePhotos } from 'js./data.js';
+import { generatePhotos } from 'js/data.js';
 
-import { renderThumbnails } from 'js./thumbnail.js';
+import { renderThumbnails } from 'js/thumbnail.js';
 
-import {renderPictures} from 'js./pictures.js';
+import {renderPictures} from 'js/pictures.js';
 
-import {mockPhotos} from 'js./mock-data.js';
+import {mockPhotos} from 'js/mock-data.js';
 
 // Вызов функции рендеринга при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,11 +40,11 @@ renderThumbnails(mockPhotos, picturesContainer);
 
 const photoArray = generatePhotos();
 
-import { initFormValidation } from 'js./form.js./form-validation.js';
+import { initFormValidation } from 'js/form.js/form-validation.js';
 
 initFormValidation();
 
-import { initImageEditor, closeImageEditor } from 'js./form.js/image-editor.js';
+import { initImageEditor, closeImageEditor } from 'js/form.js/image-editor.js';
 
 // При открытии формы
 const openImageEditor = () => {
