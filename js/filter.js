@@ -1,4 +1,4 @@
-import { onEffectChange } from './form-upload.js';
+import { onEffectChange } from './form.js/form-upload.js';
 
 effectItems.forEach((item) => {
   item.addEventListener('click', () => {

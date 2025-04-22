@@ -1,3 +1,5 @@
+const mockData =
+
 [
   {
     "id": 0,
@@ -1736,3 +1738,5 @@
     "description": "Вот это тачка! #wow #car #carwow #drive"
   }
 ]
+
+export { mockData } ;

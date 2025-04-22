@@ -1,69 +1,57 @@
-// Декоратор для устранения дребезга
-const debounce = (callback, timeoutDelay = 500) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
+const body = document.body;
+const bigPicture = document.querySelector('.big-picture');
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const socialCommentCount = document.querySelector('.social__comment-count');
+const commentsLoader = document.querySelector('.comments-loader');
 
-// Функция перемешивания массива
-const shuffleArray = (array) => {
-  const shuffled = array.slice();
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-// Обработчик изменения фильтра
-const onFilterChange = debounce((photos, filterType, renderPhotos) => {
-  let filteredPhotos = photos.slice();
-
-  switch (filterType) {
-    case 'random':
-      filteredPhotos = shuffleArray(filteredPhotos).slice(0, 10);
-      break;
-    case 'discussed':
-      filteredPhotos.sort((a, b) => b.comments.length - a.comments.length);
-      break;
-  }
-
-  const picturesContainer = document.querySelector('.pictures');
-  const pictures = picturesContainer.querySelectorAll('.picture');
-  pictures.forEach((picture) => picture.remove());
-
-  renderPhotos(filteredPhotos);
-});
-
-// Инициализация фильтров
-const initFilters = (photos, renderPhotos) => {
-  const filtersContainer = document.querySelector('.img-filters');
-  const filtersForm = filtersContainer.querySelector('.img-filters__form');
-  const defaultFilter = filtersContainer.querySelector('#filter-default');
-
-  filtersContainer.classList.remove('img-filters--inactive');
-  defaultFilter.classList.add('img-filters__button--active');
-
-  filtersForm.addEventListener('click', (evt) => {
-    const selectedFilter = evt.target.closest('.img-filters__button');
-    if (!selectedFilter) return;
-
-    const activeFilter = filtersForm.querySelector('.img-filters__button--active');
-    activeFilter.classList.remove('img-filters__button--active');
-    selectedFilter.classList.add('img-filters__button--active');
-
-    onFilterChange(photos, selectedFilter.id.replace('filter-', ''), renderPhotos);
+const renderComments = (comments, container) => {
+  container.innerHTML = '';
+  comments.forEach(({ avatar, name, message }) => {
+    const comment = document.createElement('li');
+    comment.classList.add('social__comment');
+    comment.innerHTML = `
+      <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
+      <p class="social__text">${message}</p>
+    `;
+    container.appendChild(comment);
   });
 };
+const onDocumentKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
 
-// После загрузки данных с сервера
-getData()
-  .then((photos) => {
-    renderPhotos(photos); // Первоначальная отрисовка
-    initFilters(photos, renderPhotos);
-  })
-  .catch(() => {
-    // Обработка ошибки загрузки данных
-  });
+const openBigPicture = (data) => {
+  const { url, likes, comments, description } = data;
+
+  bigPicture.querySelector('.big-picture__img img').src = url;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
+  bigPicture.querySelector('.social__comment-shown-count').textContent = comments.length;
+  bigPicture.querySelector('.social__caption').textContent = description;
+
+  const commentsContainer = bigPicture.querySelector('.social__comments');
+  renderComments(comments, commentsContainer);
+
+  socialCommentCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+
+  const onCloseButtonClick = () => closeBigPicture();
+
+  closeButton.addEventListener('click', onCloseButtonClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+
+};
+
+function closeBigPicture() {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+
+}
+
+export { openBigPicture, closeBigPicture };

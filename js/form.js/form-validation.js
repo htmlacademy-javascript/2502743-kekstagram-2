@@ -1,7 +1,9 @@
 // form-validation.js
 
 import Pristine from 'pristinejs';
-import { closeModal } from './utils.js'; // Предполагается вспомогательный модуль
+import { sendPhotoData } from './api.js';
+import { closeModal, showSuccessMessage, showErrorMessage } from './util.js';
+import { const closeModal } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagInput = form.querySelector('.text__hashtags');
@@ -12,7 +14,7 @@ const closeButton = document.querySelector('.img-upload__cancel');
 
 // Конфигурация формы
 form.method = 'POST';
-form.action = 'https://example.com/path/to/server';
+form.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
 form.enctype = 'multipart/form-data';
 
 // Валидация хештегов
@@ -88,11 +90,6 @@ const initFormValidation = () => {
   form.addEventListener('submit', onFormSubmit);
 };
 
-export { initFormValidation };
-
-import { sendPhotoData } from './api.js';
-import { closeModal, showSuccessMessage, showErrorMessage } from './utils.js';
-
 const form = document.querySelector('.img-upload__form');
 const submitButton = form.querySelector('.img-upload__submit');
 
@@ -132,3 +129,5 @@ const closeForm = () => {
   closeModal();
   resetEffects();
 };
+
+export { initFormValidation };
