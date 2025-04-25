@@ -30,15 +30,4 @@ const renderThumbnails = (photos) => {
 
 };
 
-const renderThumbnails = async (container) => {
-  try {
-    const photos = await loadPhotos();
-    const fragment = document.createDocumentFragment();
-    photos.forEach((photo) => fragment.appendChild(createThumbnail(photo)));
-    container.appendChild(fragment);
-  } catch (error) {
-    showErrorMessage(error.message);
-  }
-};
-
 export { renderThumbnails };

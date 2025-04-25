@@ -1,6 +1,6 @@
 import { renderThumbnails } from './thumbnail.js';
-import { initImageEditor, closeImageEditor } from './image-editor.js';
-import { initFormValidation } from './form-validation.js';
+import { initImageEditor, closeImageEditor } from './form.js/image-editor.js';
+import { initFormValidation } from './form.js/form-validation.js';
 
 const mockPhotos = generatePhotos();
 renderThumbnails(mockPhotos);

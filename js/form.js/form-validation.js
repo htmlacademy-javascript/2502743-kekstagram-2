@@ -1,9 +1,7 @@
 // form-validation.js
 
-import Pristine from 'pristinejs';
-import { sendPhotoData } from './api.js';
-import { closeModal, showSuccessMessage, showErrorMessage } from './util.js';
-import { const closeModal } from './util.js';
+import { sendPhotoData } from '../api.js';
+import { closeModal, showSuccessMessage, showErrorMessage } from '../util.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagInput = form.querySelector('.text__hashtags');
@@ -90,7 +88,7 @@ const initFormValidation = () => {
   form.addEventListener('submit', onFormSubmit);
 };
 
-const form = document.querySelector('.img-upload__form');
+const form = document.querySelector('.img-upload__overlay');
 const submitButton = form.querySelector('.img-upload__submit');
 
 const blockSubmitButton = () => {

@@ -2,7 +2,6 @@
 
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
-
 const Scale = {
   STEP: 25,
   MIN: 25,
@@ -155,5 +154,135 @@ const closeImageEditor = () => {
   updateScale(Scale.MAX);
   resetEffects();
 };
+
+const uploadInput = document.querySelector('.img-upload__input');
+const uploadOverlay = document.querySelector('.img-upload__overlay');
+const previewImg = document.querySelector('.img-upload__preview-img');
+const cancelButton = document.querySelector('.img-upload__cancel');
+const effectsContainer = document.querySelector('.img-upload__effects');
+const sliderContainer = document.querySelector('.img-upload__slider');
+const textDescription = document.querySelector('.text__description');
+const textHashtags = document.querySelector('.text__hashtags');
+
+// Эффекты для изображения
+const EFFECTS = [
+  { name: 'none', filter: 'none', min: 0, max: 100, step: 1, unit: '' },
+  { name: 'chrome', filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '' },
+  { name: 'sepia', filter: 'sepia', min: 0, max: 1, step: 0.1, unit: '' },
+  { name: 'marvin', filter: 'invert', min: 0, max: 100, step: 1, unit: '%' },
+  { name: 'phobos', filter: 'blur', min: 0, max: 3, step: 0.1, unit: 'px' },
+  { name: 'heat', filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' }
+];
+
+let currentEffect = EFFECTS[0];
+let slider;
+
+// Инициализация слайдера
+const initSlider = () => {
+  slider = noUiSlider.create(sliderContainer, {
+    range: {
+      min: currentEffect.min,
+      max: currentEffect.max
+    },
+    start: currentEffect.max,
+    step: currentEffect.step,
+    connect: 'lower'
+  });
+
+  slider.on('update', () => {
+    const value = slider.get();
+    previewImg.style.filter = `${currentEffect.filter}(${value}${currentEffect.unit})`;
+  });
+};
+
+// Сброс эффектов
+const resetEffects = () => {
+  currentEffect = EFFECTS[0];
+  previewImg.style.filter = 'none';
+  if (slider) {
+    slider.destroy();
+  }
+};
+
+// Обработчик выбора файла
+uploadInput.addEventListener('change', () => {
+  const file = uploadInput.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      previewImg.src = reader.result;
+      // Обновляем превью во всех эффектах
+      document.querySelectorAll('.effects__preview').forEach((preview) => {
+        preview.style.backgroundImage = `url(${reader.result})`;
+      });
+
+      uploadOverlay.classList.remove('hidden');
+      document.body.classList.add('modal-open');
+
+      resetEffects();
+      initSlider();
+    });
+
+    reader.readAsDataURL(file);
+  }
+});
+
+// Закрытие формы
+const closeForm = () => {
+  uploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadInput.value = '';
+  textDescription.value = '';
+  textHashtags.value = '';
+  resetEffects();
+};
+
+// Обработчики закрытия
+cancelButton.addEventListener('click', closeForm);
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' && !document.activeElement.matches('.text__description, .text__hashtags')) {
+    closeForm();
+  }
+});
+
+// Обработчик выбора эффекта
+effectsContainer.addEventListener('change', (evt) => {
+  if (evt.target.matches('input[type="radio"]')) {
+    currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+    previewImg.className = `img-upload__preview-img effects__preview--${currentEffect.name}`;
+
+    slider.updateOptions({
+      range: {
+        min: currentEffect.min,
+        max: currentEffect.max
+      },
+      step: currentEffect.step,
+      start: currentEffect.max
+    });
+  }
+});
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+  // Создаем радиокнопки для эффектов
+  EFFECTS.forEach((effect) => {
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'effect';
+    radio.value = effect.name;
+    radio.id = `effect-${effect.name}`;
+
+    const label = document.createElement('label');
+    label.htmlFor = `effect-${effect.name}`;
+    label.innerHTML = `
+      <span class="effects__preview effects__preview--${effect.name}"></span>
+      ${effect.name.charAt(0).toUpperCase() + effect.name.slice(1)}
+    `;
+
+    effectsContainer.append(radio, label);
+  });
+});
 
 export { initImageEditor, closeImageEditor };

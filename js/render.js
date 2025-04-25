@@ -1,4 +1,3 @@
-import { mockData } from "./mock-data";
 const renderComments = (comments) =>
   const fragment = document.createDocumentFragment();
 
