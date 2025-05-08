@@ -1,4 +1,4 @@
-const mockData =
+const mockPhotos =
 
 [
   {
@@ -1739,4 +1739,4 @@ const mockData =
   }
 ]
 
-export { mockData } ;
+export { mockPhotos } ;

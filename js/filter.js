@@ -1,6 +1,6 @@
-import { onEffectChange } from './form.js/form-upload.js';
+import { onEffectChange } from './form-upload.js';
 
-effectItems.forEach((item) => {
+const effectItems = effectItems.forEach((item) => {
   item.addEventListener('click', () => {
     onEffectChange(item.dataset.effect);
   });
@@ -12,5 +12,5 @@ reader.addEventListener('error', () => {
 
 if (file.size > 5 * 1024 * 1024) {
   showErrorMessage('Файл слишком большой (макс. 5МБ)');
-  return;
+
 }

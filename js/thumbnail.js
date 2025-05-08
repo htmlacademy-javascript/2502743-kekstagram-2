@@ -1,5 +1,4 @@
-import { openBigPicture } from './big-picture.js';
-import { loadPhotos } from './api.js';
+import { openBigPicture,closeBigPicture } from './big-picture.js';
 
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');

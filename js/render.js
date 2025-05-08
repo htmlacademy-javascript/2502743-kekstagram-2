@@ -17,7 +17,7 @@ const fillPictureData = ({ url, likes, comments, description }) => {
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
-
+}
   // Временное скрытие блоков (задание 7.2)
   bigPicture.querySelector('.social__comment-count').classList.add('hidden');
   bigPicture.querySelector('.comments-loader').classList.add('hidden')
@@ -44,3 +44,4 @@ function onCloseButtonClick(evt) {
   evt.preventDefault();
   closeBigPicture();
 }
+

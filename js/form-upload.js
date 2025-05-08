@@ -35,7 +35,7 @@ fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   if (file) {
     showPreview(file);
-    // Ваш код для открытия модального окна формы
+
   }
 });
 

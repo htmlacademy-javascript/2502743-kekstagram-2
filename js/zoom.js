@@ -1,5 +1,5 @@
-import { onScaleControlChange } from './form.js/form-upload.js';
+import { onScaleControlChange } from './form-upload.js';
 
-scaleControl.addEventListener('input', (evt) => {
+const scaleControl = scaleControl.addEventListener('input', (evt) => {
   onScaleControlChange(parseInt(evt.target.value, 10));
 });
