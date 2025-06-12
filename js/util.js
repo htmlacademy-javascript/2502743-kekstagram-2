@@ -9,13 +9,14 @@ function getRandomArrayElement(elements) {
 
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
+const TIMEOUT = 5000;
 
 export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
   document.body.appendChild(successElement);
   setTimeout(() => {
     successElement.remove();
-  }, 5000);
+  }, TIMEOUT);
 };
 
 export const showErrorMessage = (message) => {
@@ -25,7 +26,7 @@ export const showErrorMessage = (message) => {
 
   setTimeout(() => {
     errorElement.remove();
-  }, 5000);
+  }, TIMEOUT);
 };
 
 export { getRandomInteger, getRandomArrayElement }

@@ -39,13 +39,4 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-// Обработчики для масштабирования и фильтров
-const onScaleControlChange = (value) => {
-  previewImage.style.transform = `scale(${value / 100})`;
-};
-
-const onEffectChange = (effect) => {
-  previewImage.className = `img-upload__preview-image effects__preview--${effect}`;
-};
-
-export { onScaleControlChange, onEffectChange, resetImageEditor };
+export { resetImageEditor };

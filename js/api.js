@@ -1,7 +1,7 @@
-const API_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const API_URL = 'https://31.javascript.htmlacademy.pro/';
 const Route = {
-  GET_DATA: 'multipart/form-data',
-  SEND_DATA: '/posts'
+  GET_DATA: 'kekstagram/data',
+  SEND_DATA:'kekstagram'
 };
 
 const ErrorText = {

@@ -1,20 +1,6 @@
 // image-editor.js
-import noUiSlider from 'nouislider';
-import 'nouislider/dist/nouislider.css';
-
-const uploadInput = document.querySelector('.img-upload__input');
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const previewImg = document.querySelector('.img-upload__preview img');
-const cancelButton = document.querySelector('.img-upload__cancel');
-const effectsContainer = document.querySelector('.img-upload__effects');
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const scaleControlValue = document.querySelector('.scale__control--value');
-const textDescription = document.querySelector('.text__description');
-const textHashtags = document.querySelector('.text__hashtags');
+import {resetImageEditor} from './form-upload.js';
+import {scaleImage} from './zoom.js';
 
 const EFFECTS = [
   { name: 'none', filter: 'none', min: 0, max: 100, step: 1, unit: '' },
@@ -25,27 +11,19 @@ const EFFECTS = [
   { name: 'heat', filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' }
 ];
 
+const uploadInput = document.querySelector('.img-upload__input');
+const uploadOverlay = document.querySelector('.img-upload__overlay');
+const previewImg = document.querySelector('.img-upload__preview img');
+const cancelButton = document.querySelector('.img-upload__cancel');
+const effectsContainer = document.querySelector('.img-upload__effects');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const textDescription = document.querySelector('.text__description');
+const textHashtags = document.querySelector('.text__hashtags');
+
 let currentEffect = EFFECTS[0];
 let slider;
-
-// Масштабирование изображения
-const scaleImage = (value) => {
-  previewImg.style.transform = `scale(${value / 100})`;
-  scaleControlValue.value = `${value}%`;
-};
-
-scaleControlSmaller.addEventListener('click', () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
-  const newValue = Math.max(currentValue - 25, 25);
-  scaleImage(newValue);
-});
-
-scaleControlBigger.addEventListener('click', () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
-  const newValue = Math.min(currentValue + 25, 100);
-  scaleImage(newValue);
-});
-
 // Инициализация слайдера
 const initSlider = () => {
   slider = noUiSlider.create(sliderElement, {
@@ -112,7 +90,9 @@ const closeForm = () => {
 };
 
 // Обработчики закрытия
-cancelButton.addEventListener('click', closeForm);
+cancelButton.addEventListener('click',() => {
+  closeForm();
+});
 
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape' &&
@@ -145,30 +125,6 @@ effectsContainer.addEventListener('change', (evt) => {
   }
 });
 
-// Валидация хэштегов
-const validateHashtags = (value) => {
-  if (!value.trim()) return true;
-
-  const hashtags = value.toLowerCase().split(' ').filter(Boolean);
-  const regex = /^#[a-zа-яё0-9]{1,19}$/i;
-
-  // Не более 5 хэштегов
-  if (hashtags.length > 5) return false;
-
-  // Проверка каждого хэштега
-  const valid = hashtags.every(hashtag => regex.test(hashtag));
-
-  // Проверка на дубликаты
-  const unique = new Set(hashtags);
-  return valid && unique.size === hashtags.length;
-};
-
-// Валидация комментария
-const validateComment = (value) => value.length <= 140;
-
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', () => {
-  // Создаем радиокнопки для эффектов
   EFFECTS.forEach((effect) => {
     const radio = document.createElement('input');
     radio.type = 'radio';
@@ -188,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Устанавливаем оригинал по умолчанию
   document.getElementById('effect-none').checked = true;
+
 });
 
-export {}
+export {};
