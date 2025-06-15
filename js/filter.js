@@ -1,4 +1,3 @@
-// Декоратор для устранения дребезга
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
@@ -42,20 +41,25 @@ const initFilters = (photos, renderPhotos) => {
   const filtersContainer = document.querySelector('.img-filters');
   const filtersForm = filtersContainer.querySelector('.img-filters__form');
   const defaultFilter = filtersContainer.querySelector('#filter-default');
+}
 
   filtersContainer.classList.remove('img-filters--inactive');
   defaultFilter.classList.add('img-filters__button--active');
 
   filtersForm.addEventListener('click', (evt) => {
-    const selectedFilter = evt.target.closest('.img-filters__button');
-    if (!selectedFilter) return;
+
+    const selectedFilter = evt.target.closest('.img-filters__button')
+
+    if (!selectedFilter) return
+
+  }
+
 
     const activeFilter = filtersForm.querySelector('.img-filters__button--active');
     activeFilter.classList.remove('img-filters__button--active');
     selectedFilter.classList.add('img-filters__button--active');
 
     onFilterChange(photos, selectedFilter.id.replace('filter-', ''), renderPhotos);
-  });
-};
+
 
 export {initFilters};

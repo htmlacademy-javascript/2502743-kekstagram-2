@@ -1,5 +1,4 @@
-// image-editor.js
-import {resetImageEditor} from './form-upload.js';
+// image-editor.
 import {scaleImage} from './zoom.js';
 
 const EFFECTS = [
@@ -123,7 +122,7 @@ effectsContainer.addEventListener('change', (evt) => {
       });
     }
   }
-});
+
 
   EFFECTS.forEach((effect) => {
     const radio = document.createElement('input');
@@ -147,4 +146,3 @@ effectsContainer.addEventListener('change', (evt) => {
 
 });
 
-export {};

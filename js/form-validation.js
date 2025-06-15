@@ -3,64 +3,55 @@ import { closeModal, showSuccessMessage, showErrorMessage } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
 const pristine = new window.Pristine(form, {
-      classTo: 'img-upload__field-wrapper',
-      errorTextParent: 'img-upload__field-wrapper',
-      errorTextClass: 'img-upload__error-text'
-    });
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__error-text'
+});
+
 const MAX_HASHTAGS = 5;
-const MAX_COMMENT_LEHGTH = 140;
-const hashtags = value.toLLowerCase().split('').filter(Boolean);
-const regex = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_COMMENT_LENGTH = 140;
+const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 
-// Проверка хэштэга
-const isValidTags = hashtags.every((hashtag) =>
-  regex.test(hashtag));
+// Валидация хэштегов
+const validateHashtags = (value) => {
+  if (!value.trim()) {
+    return true; // Пустая строка — валидно
+  }
 
+  const hashtags = value.toLowerCase().trim().split(/\s+/).filter(Boolean);
 
-// не более 5 хэштегов
- (hashtags.length > MAX_HASHTAGS) {
-  return false;
-}
+  // Проверка на максимальное количество
+  if (hashtags.length > MAX_HASHTAGS) {
+    return false;
+  }
 
-// Проверка на дупликаты
-const unique = new Set(hashtags);
-return isValidTags && unique.size === hashtags.length;
-    pristine.addValidator(
-      form.querySelector('.text__hashtags'),
-      value => {
-        if (!value.trim()) return true;
-        const tags = value.split(' ').filter(tag => tag.trim());
-        return tags.every(tag => test(tag));
-      },
-      'Некорректный хэштег'
-    );
+  // Проверка формата каждого хэштега
+  const isValidFormat = hashtags.every((tag) => HASHTAG_REGEX.test(tag));
+  if (!isValidFormat) {
+    return false;
+  }
 
+  // Проверка на дубликаты
+  const uniqueHashtags = new Set(hashtags);
+  return uniqueHashtags.size === hashtags.length;
+};
+
+// Валидация комментария
+const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
+
+// Инициализация валидации
 const initValidation = () => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (pristine.validate()) {
-        try {
-          await sendPhotoData(new FormData(form));
-          showSuccessMessage();
-          closeModal();
-        } catch {
-          showErrorMessage();
-        }
-      }
-    });
+  pristine.addValidator(
+    form.querySelector('.text_hashtags'),
+    validateHashtags,
+    'Некорректный хэштег (максимум 5, формат: #пример, без повторов)'
+  );
 
-      // Валидация хэштегов
-pristine.addValidator(
-  form.querySelector('.text_hashtags'),
-  validateHashtags,
-  'некоректный хэштег'
-);
+  pristine.addValidator(
+    form.querySelector('.text_description'),
+    validateComment,
+    'Максимум 140 символов'
+  );
+};
 
-    //валидация комменгариев
-pristine.addValidator(
-  form.querySelector('.text_description'),
-  validateComment,
-      'Максимум 140 символов'
-)}
-
-export {initValidation};
+export { initValidation };

@@ -29,7 +29,7 @@ export const showErrorMessage = (message) => {
   }, TIMEOUT);
 };
 
-export { getRandomInteger, getRandomArrayElement }
+export { getRandomInteger, getRandomArrayElement };
 
 export const closeModal = (element) => {
   element.classList.add('hidden');
