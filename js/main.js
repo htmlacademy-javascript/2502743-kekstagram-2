@@ -2,7 +2,7 @@ import { renderThumbnails } from './thumbnail.js';
 import { initValidation } from './form-validation.js';
 import './zoom.js';
 import './filter.js';
-//import './image-editor.js';
+import './image-editor.js';
 import { loadPhotos } from './api.js';
 
 const filterContainer = document.querySelector('.img-filters');

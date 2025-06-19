@@ -11,7 +11,7 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   image.alt = description;
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openBigPicture(photo);
+    openBigPicture(image);
   });
 
   return thumbnail;

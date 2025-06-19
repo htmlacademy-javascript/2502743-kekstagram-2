@@ -1,6 +1,3 @@
-import { sendPhotoData } from './api.js';
-import { closeModal, showSuccessMessage, showErrorMessage } from './util.js';
-
 const form = document.querySelector('.img-upload__form');
 const pristine = new window.Pristine(form, {
   classTo: 'img-upload__field-wrapper',

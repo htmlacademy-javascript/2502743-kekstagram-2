@@ -1,28 +1,27 @@
 const ZOOM_STEP = 25;
-const uploadForm = document.querySelector('img-upload_form');
-const previewImage = uploadForm.querySelector('.img-upload_preview-image');
+const uploadForm = document.querySelector('.img-upload__form');
+const previewImg = uploadForm.querySelector('.img-upload__preview-image');
+
 // Обработчики для масштабирования и фильтров
-const changeScaleControlChange = (value) => {
-  previewImage.style.transform = `scale(${value / 100})`;
-};
-const scaleControl = document.querySelector(.scale_control-value );
-const scaleMinus = document.querySelector('scale-control-smaller ');
-const scalePlus = document.querySelector('scale-control-bigger' );
+
+const scaleControl = document.querySelector('.scale__control--value');
+const scaleMinus = document.querySelector('.scale__control--smaller');
+const scalePlus = document.querySelector('.scale__control--bigger');
 
 // Масштабирование изображения
 const scaleImage = (value) => {
   previewImg.style.transform = `scale(${value / 100})`;
-  scaleControlValue.value = `${value}%`;
+  scaleControl.value = `${value}%`;
 };
 
-scaleControlSmaller.addEventListener('click', () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
+scaleMinus.addEventListener('click', () => {
+  const currentValue = parseInt(scaleControl.value, 10);
   const newValue = Math.max(currentValue - ZOOM_STEP, ZOOM_STEP);
   scaleImage(newValue);
 });
 
-scaleControlBigger.addEventListener('click', () => {
-  const currentValue = parseInt(scaleControlValue.value, 10);
+scalePlus.addEventListener('click', () => {
+  const currentValue = parseInt(scaleControl.value, 10);
   const newValue = Math.min(currentValue + ZOOM_STEP, 100);
   scaleImage(newValue);
 });
