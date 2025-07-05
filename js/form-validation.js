@@ -38,14 +38,15 @@ const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 // Инициализация валидации
 const initValidation = () => {
+
   pristine.addValidator(
-    form.querySelector('.text_hashtags'),
+    form.querySelector('.text__hashtags'),
     validateHashtags,
     'Некорректный хэштег (максимум 5, формат: #пример, без повторов)'
   );
 
   pristine.addValidator(
-    form.querySelector('.text_description'),
+    form.querySelector('.text__description'),
     validateComment,
     'Максимум 140 символов'
   );

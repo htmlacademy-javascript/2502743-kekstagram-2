@@ -1,6 +1,6 @@
 const ZOOM_STEP = 25;
 const uploadForm = document.querySelector('.img-upload__form');
-const previewImg = uploadForm.querySelector('.img-upload__preview-image');
+const previewImg = uploadForm.querySelector('.img-upload__preview img');
 
 // Обработчики для масштабирования и фильтров
 
@@ -10,7 +10,7 @@ const scalePlus = document.querySelector('.scale__control--bigger');
 
 // Масштабирование изображения
 const scaleImage = (value) => {
-  previewImg.style.transform = `scale(${value / 100})`;
+  previewImg.style.transform = `scale(${value / 100 })`;
   scaleControl.value = `${value}%`;
 };
 

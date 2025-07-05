@@ -4,17 +4,23 @@ const thumbnailTemplate = document.querySelector('#picture').content.querySelect
 const container = document.querySelector('.pictures');
 const createThumbnail = ({ url, description, likes, comments }) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
-  const image = thumbnail.querySelector('.picture img');
+  const image = thumbnail.querySelector('.picture__img');
   thumbnail.querySelector('.picture__likes').textContent = likes;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
   image.src = url;
   image.alt = description;
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openBigPicture(image);
+    openBigPicture({ url, description, likes, comments });
   });
 
   return thumbnail;
+};
+
+const clearThumbnails = () => {
+  thumbnailTemplate.querySelectorAll('.picture').forEach((thumbnailElement) => {
+    thumbnailElement.remove();
+  });
 };
 
 const renderThumbnails = (photos) => {
@@ -27,4 +33,5 @@ const renderThumbnails = (photos) => {
 
 };
 
-export { renderThumbnails };
+
+export { renderThumbnails,clearThumbnails };

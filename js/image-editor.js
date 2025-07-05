@@ -12,7 +12,7 @@ const EFFECTS = [
 
 const uploadInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
-const previewImg = document.querySelector('.img-upload__preview img');
+const previewImg = document.querySelector('.img-upload__preview-container');
 const cancelButton = document.querySelector('.img-upload__cancel');
 const effectsContainer = document.querySelector('.img-upload__effects');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
