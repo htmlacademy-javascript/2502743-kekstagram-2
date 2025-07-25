@@ -4,7 +4,7 @@ import './zoom.js';
 import './filter.js';
 import './image-editor.js';
 import { loadPhotos } from './api.js';
-
+import { initForm } from './form-upload.js';
 const filterContainer = document.querySelector('.img-filters');
 
 try {
@@ -18,3 +18,4 @@ try {
 
 initValidation();
 
+initForm();
