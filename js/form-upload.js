@@ -1,4 +1,4 @@
-import { sendData } from './api.js';
+import { sendFotoData } from './api.js';
 import { showSuccess, showError } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -67,7 +67,7 @@ const onFormSubmit = async (evt) => {
 
   try {
     blockSubmitButton();
-    await sendData(new FormData(form));
+    await sendFotoData(new FormData(form));
     closeForm();
     showSuccess();
   } catch (err) {
