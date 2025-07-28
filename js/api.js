@@ -1,4 +1,4 @@
-const API_URL = 'https://31.javascript.htmlacademy.pro/';
+const API_URL = 'https://31.javascript.htmlacademy.my.prokekstagram/data';
 const Route = {
   GET_DATA: 'kekstagram/data',
   SEND_DATA:'kekstagram'
@@ -21,7 +21,7 @@ const loadPhotos = async () => {
   }
 };
 
-const sendPhotoData = async (formData) => {
+const sendData = async (formData) => {
   try {
     const response = await fetch(`${API_URL}${Route.SEND_DATA}`, {
       method: 'POST',
@@ -36,4 +36,4 @@ const sendPhotoData = async (formData) => {
   }
 };
 
-export { loadPhotos, sendPhotoData };
+export { loadPhotos, sendData };
