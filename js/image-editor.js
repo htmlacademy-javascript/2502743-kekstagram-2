@@ -123,24 +123,6 @@ effectsContainer.addEventListener('change', (evt) => {
     }
   }
 
-
-  EFFECTS.forEach((effect) => {
-    const radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = 'effect';
-    radio.value = effect.name;
-    radio.id = `effect-${effect.name}`;
-
-    const label = document.createElement('label');
-    label.htmlFor = `effect-${effect.name}`;
-    label.innerHTML = `
-      <span class="effects__preview effects__preview--${effect.name}"></span>
-      ${effect.name.charAt(0).toUpperCase() + effect.name.slice(1)}
-    `;
-
-    effectsContainer.append(radio, label);
-  });
-
   // Устанавливаем оригинал по умолчанию
   document.getElementById('effect-none').checked = true;
 

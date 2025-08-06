@@ -1,4 +1,4 @@
-const API_URL = 'https://31.javascript.htmlacademy.my.prokekstagram/data';
+const API_URL = 'https://31.javascript.htmlacademy.pro/';
 const Route = {
   GET_DATA: 'kekstagram/data',
   SEND_DATA:'kekstagram'
