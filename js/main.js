@@ -10,8 +10,8 @@ const filterContainer = document.querySelector('.img-filters');
 try {
   const photoData = await loadPhotos();
   renderThumbnails(photoData);
-  applyFilters();
   filterContainer.classList.remove('img-filters--inactive');
+  applyFilters();
 } catch {
   //console.error('ошибка загрузки фотографий');
 

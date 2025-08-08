@@ -59,6 +59,7 @@ const initFilters = (photos, renderPhotos) => {
     onFilterChange(photos, selectedFilter.id.replace('filter-', ''), renderPhotos);
   });
 };
+
 export const applyFilters = (photos) => {
   // Проверяем, что photos существует и является массивом
   if (!photos || !Array.isArray(photos)) {
