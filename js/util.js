@@ -21,7 +21,7 @@ export const showSuccessMessage = () => {
 
 export const showErrorMessage = (message) => {
   const errorElement = errorTemplate.cloneNode(true);
-  errorElement.querySelector('.error__message').textContent = message;
+  errorElement.querySelector('.error__tittle').textContent = message;
   document.body.appendChild(errorElement);
 
   setTimeout(() => {

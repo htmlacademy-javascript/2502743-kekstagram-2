@@ -11,7 +11,7 @@ try {
   const photoData = await loadPhotos();
   renderThumbnails(photoData);
   filterContainer.classList.remove('img-filters--inactive');
-  applyFilters();
+  applyFilters(photoData);
 } catch {
   //console.error('ошибка загрузки фотографий');
 

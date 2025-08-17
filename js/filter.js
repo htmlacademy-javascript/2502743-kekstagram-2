@@ -18,21 +18,33 @@ const shuffleArray = (array) => {
 };
 
 // Обработчик изменения фильтра
+//
 const onFilterChange = debounce((photos, filterType, renderPhotos) => {
-  let filteredPhotos = photos.slice();
+  // Проверяем, что photos является массивом
+  if (!Array.isArray(photos)) {
+    return;
+  }
+
+  // Создаем копию массива с проверкой
+  let filteredPhotos = Array.isArray(photos) ? [...photos] : [];
 
   switch (filterType) {
     case 'random':
       filteredPhotos = shuffleArray(filteredPhotos).slice(0, 10);
       break;
     case 'discussed':
-      filteredPhotos.sort((a, b) => b.comments.length - a.comments.length);
+      filteredPhotos.sort((a, b) => (b.comments?.length || 0) - (a.comments?.length || 0));
+      break;
+    default:
+      // Для других фильтров оставляем исходный массив
       break;
   }
 
   const picturesContainer = document.querySelector('.pictures');
-  const pictures = picturesContainer.querySelectorAll('.picture');
-  pictures.forEach((picture) => picture.remove());
+  if (picturesContainer) {
+    const pictures = picturesContainer.querySelectorAll('.picture');
+    pictures.forEach((picture) => picture.remove());
+  }
 
   renderPhotos(filteredPhotos);
 });
