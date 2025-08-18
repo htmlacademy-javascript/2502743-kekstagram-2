@@ -1,50 +1,22 @@
-/**
- * генерация фотографий из массива
- * есть 25 объектов фотографий со своим id
- * для каждого фото генерируем случайный коментарий(0-30)
- * каждый коментарий получает свой id,случайную аватарку,уведомпение и имя
- * @param {getRandomInteger} : boolean - функция генерирующая случайное число в заданом диапазоне
- * @param {getRandomArrayElement} - функция которая возвращает случайный элемент с массива
- * @param {generateFotos} - создаёт массивы с возможными описаниями,коментариями и именами
- * @return {boolean} - возвращает случайный елемент из массива
- * @param {photoArray} - генерирует случайный объект из массива
- */
-
-import { generatePhotos } from './data.js';
 import { renderThumbnails } from './thumbnail.js';
+import { initValidation } from './form-validation.js';
+import './zoom.js';
+import {initFilters,applyFilters} from'./filter.js';
+import './image-editor.js';
+import { loadPhotos } from './api.js';
+import { initForm } from './form-upload.js';
+const filterContainer = document.querySelector('.img-filters');
 
-const picturesContainer = document.querySelector('.pictures');
-const mockPhotos = [
-  {
-    url: 'photos/photo1.jpg',
-    description: 'Прекрасный закат',
-    likes: 150,
-    comments: [
-      { id: 1, message: 'Отличный кадр!' },
-      { id: 2, message: 'Супер!' }
-    ]
-  },
-  // ... другие тестовые данные
-];
+try {
+  const photoData = await loadPhotos();
+  renderThumbnails(photoData);
+  filterContainer.classList.remove('img-filters--inactive');
+  applyFilters(photoData);
+} catch {
+  //console.error('ошибка загрузки фотографий');
 
-renderThumbnails(mockPhotos, picturesContainer);
+}
 
-const photoArray = generatePhotos();
-
-import { initFormValidation } from './form-validation.js';
-
-initFormValidation();
-
-import { initImageEditor, closeImageEditor } from './image-editor.js';
-
-// При открытии формы
-const openImageEditor = () => {
-  initImageEditor();
-  // ... другая логика инициализации
-};
-
-// При закрытии формы
-const onCloseButtonClick = () => {
-  closeImageEditor();
-  // ... другая логика закрытия
-};
+initValidation();
+initForm();
+initFilters();

@@ -1,4 +1,4 @@
-import { getRandomInteger, getRandomArrayElement } from 'util.js';
+import { getRandomInteger, getRandomArrayElement } from './util.js';
 
 function generatePhotos() {
   const desscriptions = [
