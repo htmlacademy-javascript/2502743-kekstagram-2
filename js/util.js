@@ -15,8 +15,11 @@ export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
   document.body.appendChild(successElement);
   setTimeout(() => {
-    successElement.remove();
+    if (successElement) {
+      successElement.remove();
+    }
   }, TIMEOUT);
+
 };
 
 export const showErrorMessage = (message) => {
@@ -25,8 +28,11 @@ export const showErrorMessage = (message) => {
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
-    errorElement.remove();
+    if (errorElement) {
+      errorElement.remove();
+    }
   }, TIMEOUT);
+
 };
 
 export { getRandomInteger, getRandomArrayElement };

@@ -18,5 +18,5 @@ try {
 }
 
 initValidation();
-initForm();
-initFilters();
+initForm(renderThumbnails);
+initFilters(filterContainer);
