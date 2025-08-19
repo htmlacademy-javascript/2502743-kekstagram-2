@@ -6,17 +6,14 @@ import './image-editor.js';
 import { loadPhotos } from './api.js';
 import { initForm } from './form-upload.js';
 const filterContainer = document.querySelector('.img-filters');
-
+initFilters(loadPhotos);
 try {
-  const photoData = await loadPhotos();
+  initForm();
+  initValidation();
+  const photoData = await loadPhotos(renderThumbnails);
   renderThumbnails(photoData);
   filterContainer.classList.remove('img-filters--inactive');
   applyFilters(photoData);
 } catch {
-  //console.error('ошибка загрузки фотографий');
-
+  console.error('ошибка загрузки фотографий');
 }
-
-initValidation(loadPhotos);
-initForm(renderThumbnails);
-initFilters(filterContainer);
