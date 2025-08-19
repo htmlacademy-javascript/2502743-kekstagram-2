@@ -15,7 +15,7 @@ export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
   document.body.appendChild(successElement);
   setTimeout(() => {
-    if (successElement) {
+    if (successElement && successElement.parentNode) {
       successElement.remove();
     }
   }, TIMEOUT);
@@ -28,7 +28,7 @@ export const showErrorMessage = (message) => {
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
-    if (errorElement) {
+    if (errorElement && errorElement.parentNode) {
       errorElement.remove();
     }
   }, TIMEOUT);

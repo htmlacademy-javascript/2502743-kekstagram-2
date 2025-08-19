@@ -17,6 +17,6 @@ try {
 
 }
 
-initValidation();
+initValidation(loadPhotos);
 initForm(renderThumbnails);
 initFilters(filterContainer);
