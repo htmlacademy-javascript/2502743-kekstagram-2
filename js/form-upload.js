@@ -10,9 +10,9 @@ const effectsPreview = document.querySelectorAll('.effects__preview');
 const imgPreview = document.querySelector('.img-upload__preview img');
 
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
+  classTo: 'img-upload__wrapper',
+  errorTextParent: 'img-upload__wrapper',
+  errorTextClass: 'img-upload__wrapper--error',
 });
 
 const blockSubmitButton = () => {
