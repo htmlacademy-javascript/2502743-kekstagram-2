@@ -7,6 +7,14 @@ function getRandomArrayElement(elements) {
   return elements[getRandomInteger(0, elements.length - 1)];
 }
 
+// Декоратор для устранения дребезга
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
 const TIMEOUT = 5000;
@@ -15,8 +23,11 @@ export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
   document.body.appendChild(successElement);
   setTimeout(() => {
-    successElement.remove();
+    if (successElement && successElement.parentNode) {
+      successElement.remove();
+    }
   }, TIMEOUT);
+
 };
 
 export const showErrorMessage = (message) => {
@@ -25,12 +36,15 @@ export const showErrorMessage = (message) => {
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
-    errorElement.remove();
+    if (errorElement && errorElement.parentNode) {
+      errorElement.remove();
+    }
   }, TIMEOUT);
+
 };
 
 export { getRandomInteger, getRandomArrayElement };
-
+export { debounce };
 export const closeModal = (element) => {
   element.classList.add('hidden');
   document.body.classList.remove('modal-open');

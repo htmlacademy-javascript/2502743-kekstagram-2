@@ -10,9 +10,9 @@ const effectsPreview = document.querySelectorAll('.effects__preview');
 const imgPreview = document.querySelector('.img-upload__preview img');
 
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
+  classTo: 'img-upload__wrapper',
+  errorTextParent: 'img-upload__wrapper',
+  errorTextClass: 'img-upload__wrapper--error',
 });
 
 const blockSubmitButton = () => {
@@ -31,15 +31,20 @@ const resetForm = () => {
   imgPreview.style.transform = 'scale(1)';
   imgPreview.className = 'effects__preview--none';
 };
-
-const closeForm = () => {
+const onEscKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    closeForm();
+  }
+};
+function closeForm() {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown');
+  document.removeEventListener('keydown', onEscKeydown);
   resetForm();
-};
+}
 
 const onCancelButtonClick = () => closeForm();
+
 
 const onFileInputChange = (evt) => {
   const file = evt.target.files[0];
@@ -54,7 +59,7 @@ const onFileInputChange = (evt) => {
     reader.readAsDataURL(file);
     overlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
-    document.addEventListener('keydown');
+    document.addEventListener('keydown', onEscKeydown);
   }
 };
 
@@ -76,6 +81,7 @@ const onFormSubmit = async (evt) => {
     unblockSubmitButton();
   }
 };
+
 
 const initForm = () => {
   fileInput.addEventListener('change', onFileInputChange);

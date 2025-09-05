@@ -5,18 +5,17 @@ import {initFilters,applyFilters} from'./filter.js';
 import './image-editor.js';
 import { loadPhotos } from './api.js';
 import { initForm } from './form-upload.js';
+import { showErrorMessage } from './util.js';
 const filterContainer = document.querySelector('.img-filters');
-
+initFilters(loadPhotos);
 try {
-  const photoData = await loadPhotos();
+  initForm();
+  initValidation();
+  const photoData = await loadPhotos(renderThumbnails);
   renderThumbnails(photoData);
   filterContainer.classList.remove('img-filters--inactive');
   applyFilters(photoData);
-} catch {
-  //console.error('ошибка загрузки фотографий');
-
+} catch (error) {
+  showErrorMessage('Не удалось загрузить фотографии. Попробуйте обновить страницу');
+  //console.error('Ошибка загрузки фотографий:', error);
 }
-
-initValidation();
-initForm();
-initFilters();
