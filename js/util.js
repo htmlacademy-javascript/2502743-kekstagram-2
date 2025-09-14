@@ -1,3 +1,4 @@
+const TIMEOUT = 5000;
 function getRandomInteger(min, max) {
   return Math.floor(Math.random()
     * (max - min + 1)) + min;
@@ -17,7 +18,6 @@ const debounce = (callback, timeoutDelay = 500) => {
 };
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
-const TIMEOUT = 5000;
 
 export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
