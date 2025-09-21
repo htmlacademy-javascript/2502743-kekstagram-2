@@ -9,10 +9,12 @@ const renderComments = (comments, container) => {
   comments.forEach(({ avatar, name, message }) => {
     const comment = document.createElement('li');
     comment.classList.add('social__comment');
-    comment.innerHTML = `
-      <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
-      <p class="social__text">${message}</p>
-    `;
+    const img = document.createElement('img');
+    img.src = avatar;
+    img.alt = name;
+    img.comments = message;
+    img.description = comment;
+
     container.appendChild(comment);
   });
 };

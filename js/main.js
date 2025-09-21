@@ -17,5 +17,6 @@ try {
   applyFilters(photoData);
 } catch (error) {
   showErrorMessage('Не удалось загрузить фотографии. Попробуйте обновить страницу');
-  //console.error('Ошибка загрузки фотографий:', error);
+  console.error('Ошибка загрузки фотографий:', error);
 }
+

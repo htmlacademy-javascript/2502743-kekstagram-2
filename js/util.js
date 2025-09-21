@@ -1,4 +1,14 @@
 const TIMEOUT = 5000;
+const successTemplate = document.querySelector('#success').content;
+const errorTemplate = document.querySelector('#error').content;
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 function getRandomInteger(min, max) {
   return Math.floor(Math.random()
     * (max - min + 1)) + min;
@@ -9,16 +19,6 @@ function getRandomArrayElement(elements) {
 }
 
 // Декоратор для устранения дребезга
-const debounce = (callback, timeoutDelay = 500) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
-const successTemplate = document.querySelector('#success').content;
-const errorTemplate = document.querySelector('#error').content;
-
 export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
   document.body.appendChild(successElement);
@@ -32,7 +32,7 @@ export const showSuccessMessage = () => {
 
 export const showErrorMessage = (message) => {
   const errorElement = errorTemplate.cloneNode(true);
-  errorElement.querySelector('.error__tittle').textContent = message;
+  errorElement.querySelector('img-upload__field-wrapper--error').showErrorMessage = message;
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
