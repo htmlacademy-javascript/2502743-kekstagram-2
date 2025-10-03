@@ -12,7 +12,7 @@ const EFFECTS = [
 
 const uploadInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
-const previewImg = document.querySelector('.img-upload__preview-container');
+const previewImg = document.querySelector('.img-upload__preview-img');
 const cancelButton = document.querySelector('.img-upload__cancel');
 const effectsContainer = document.querySelector('.img-upload__effects');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
@@ -91,14 +91,6 @@ const closeForm = () => {
 // Обработчики закрытия
 cancelButton.addEventListener('click',() => {
   closeForm();
-});
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape' &&
-      !textDescription.matches(':focus') &&
-      !textHashtags.matches(':focus')) {
-    closeForm();
-  }
 });
 
 // Обработчик выбора эффекта

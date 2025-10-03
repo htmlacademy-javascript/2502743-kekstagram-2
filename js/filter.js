@@ -11,7 +11,6 @@ const shuffleArray = (array) => {
 };
 
 // Обработчик изменения фильтра
-//
 const onFilterChange = debounce((photos, filterType, renderPhotos) => {
   // Проверяем, что photos является массивом
   if (!Array.isArray(photos)) {
@@ -47,10 +46,10 @@ const initFilters = (photos, renderPhotos) => {
   const filtersContainer = document.querySelector('.img-filters');
   const filtersForm = filtersContainer.querySelector('.img-filters__form');
   const defaultFilter = filtersContainer.querySelector('#filter-default');
-
+  const filterContainer = document.querySelector('.img-filters');
+  filterContainer.classList.remove('img-filters--inactive');
   filtersContainer.classList.remove('img-filters--inactive');
   defaultFilter.classList.add('img-filters__button--active');
-
   filtersForm.addEventListener('click', (evt) => {
     const selectedFilter = evt.target.closest('.img-filters__button');
     if (!selectedFilter) {

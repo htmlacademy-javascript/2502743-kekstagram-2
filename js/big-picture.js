@@ -14,7 +14,6 @@ const renderComments = (comments, container) => {
     img.alt = name;
     img.comments = message;
     img.description = comment;
-
     container.appendChild(comment);
   });
 };
@@ -34,7 +33,7 @@ const openBigPicture = (data) => {
   bigPicture.querySelector('.social__comment-shown-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  const commentsContainer = bigPicture.querySelector('.social__comments');
+  const commentsContainer = bigPicture.querySelector('.social__comment');
   renderComments(comments, commentsContainer);
 
   socialCommentCount.classList.add('hidden');
