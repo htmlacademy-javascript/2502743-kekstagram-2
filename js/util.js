@@ -9,15 +9,9 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-function getRandomInteger(min, max) {
-  return Math.floor(Math.random()
-    * (max - min + 1)) + min;
-}
+const isEscapekey = (evt) => evt.key === 'Escape';
 
-function getRandomArrayElement(elements) {
-  return elements[getRandomInteger(0, elements.length - 1)];
-}
-
+//
 // Декоратор для устранения дребезга
 export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);
@@ -43,9 +37,4 @@ export const showErrorMessage = (message) => {
 
 };
 
-export { getRandomInteger, getRandomArrayElement };
-export { debounce };
-export const closeModal = (element) => {
-  element.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
+export { debounce, isEscapekey };

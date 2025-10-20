@@ -97,7 +97,7 @@ cancelButton.addEventListener('click',() => {
 effectsContainer.addEventListener('change', (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-    previewImg.className = `img-upload__preview-img effects__preview--${currentEffect.name}`;
+    previewImg.className = `img-upload__preview-img--${currentEffect.name}`;
 
     if (currentEffect.name === 'none') {
       sliderContainer.classList.add('hidden');

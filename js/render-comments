@@ -1,0 +1,50 @@
+const COUNT_SHOW_COMMENTS = 5;
+let currentCount = 0;
+let currenntComments = [];
+
+const bigPicture = document.querySelector('.big-picture');
+const socialComments = bigPicture.querySelector('.social__comments');
+const socialComment = document.querySelector('.social__comment');
+const commentsLoaderButton = document.querySelector('.comments-loader');
+const showCommentCount = document.querySelector('.comment__comment-show-count');
+const totalCommentCount = document.querySelector('.comment__comment-total-show');
+socialComment.innerHTML = ''; //для чистки встроенных li
+
+
+const renderComments = () => {
+  const renderedComments = currenntComments.slice(currentCount,COUNT_SHOW_COMMENTS + currentCount);
+  const renderedCommentsLength = renderComments.length + currentCount;
+  const commentsFragment = document.createDocumentFragment();
+
+  renderedComments.forEach(comment => {
+    const commentTemplate = socialComment.cloneNode(true);
+    commentTemplate.querySelector('.social__picture').src = comment.avatar;
+    commentTemplate.querySelector('.social__picture').alt = comment.name;
+    commentTemplate.querySelector('.social__text').textContent = comment.message;
+    commentsFragment.appendChild(commentTemplate);
+  });
+  socialComments.appendChild(commentsFragment);
+  showCommentCount.textContent = renderedCommentsLength;
+  totalCommentCount.textContent = currenntComments.length;
+
+  if (renderedCommentsLength === currenntComments.length) {
+    commentsLoaderButton.classList.add('hidden');
+
+    currentCount =+ COUNT_SHOW_COMMENTS;
+  }
+
+  const renderComments = (currentFotoComments) => {
+    currenntComments = currentFotoComments;
+    renderedComments();
+    commentsLoaderButton.addEventListener('click',renderedComments);
+  }
+  function clearComments() {
+    currentCount = 0;
+    socialComment.innerHTML = '';
+    commentsLoaderButton.classList.remove('hidden');
+    commentsLoaderButton.removeEventListener('click', renderedComments);
+  }
+}
+
+export { renderComments,clearComments };
+
