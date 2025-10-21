@@ -11,7 +11,6 @@ const debounce = (callback, timeoutDelay = 500) => {
 
 const isEscapekey = (evt) => evt.key === 'Escape';
 
-//
 // Декоратор для устранения дребезга
 export const showSuccessMessage = () => {
   const successElement = successTemplate.cloneNode(true);

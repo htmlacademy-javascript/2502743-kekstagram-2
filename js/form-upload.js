@@ -1,5 +1,6 @@
 import { sendData } from '/js/api.js';
 import { showSuccessMessage, showErrorMessage } from '/js/util.js';
+import { validateHashtags } from './form-validation';
 
 const form = document.querySelector('.img-upload__form');
 const submitButton = form.querySelector('.img-upload__submit');
@@ -14,6 +15,10 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__wrapper',
   errorTextClass: 'img-upload__wrapper--error',
 });
+pristine.addValidator(
+  form.querySelector('.text-hashtags'),
+  validateHashtags(),
+);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;

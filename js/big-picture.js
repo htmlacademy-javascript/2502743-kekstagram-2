@@ -1,5 +1,5 @@
-import { isEscapekey } from "./util";
-import { renderComments,clearComments } from "./render-comments";
+import { isEscapekey } from '/util';
+import { renderComments,clearComments } from './render-comments';
 
 const body = document.body;
 const bigPicture = document.querySelector('.big-picture');
@@ -12,7 +12,7 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     closeBigPicture();
   }
-}
+};
 
 const openBigPicture = (data) => {
   const { url,likes,comments,description } = data;

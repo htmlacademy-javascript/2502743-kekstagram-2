@@ -17,12 +17,6 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   return thumbnail;
 };
 
-const clearThumbnails = () => {
-  thumbnailTemplate.querySelectorAll('.picture').forEach((thumbnailElement) => {
-    thumbnailElement.remove();
-  });
-};
-
 const renderThumbnails = (photos) => {
   const fragment = document.createDocumentFragment();
   photos.forEach((photo) => {
@@ -31,6 +25,12 @@ const renderThumbnails = (photos) => {
   });
   container.appendChild(fragment);
 
+};
+
+const clearThumbnails = () => {
+  thumbnailTemplate.querySelectorAll('.picture').forEach((thumbnailElement) => {
+    thumbnailElement.remove();
+  });
 };
 
 
