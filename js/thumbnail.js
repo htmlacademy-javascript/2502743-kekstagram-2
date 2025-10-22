@@ -1,5 +1,3 @@
-import { openBigPicture } from './big-picture.js';
-
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 const createThumbnail = ({ url, description, likes, comments }) => {
@@ -11,7 +9,6 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   image.alt = description;
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openBigPicture({ url, description, likes, comments });
   });
 
   return thumbnail;

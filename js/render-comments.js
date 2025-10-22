@@ -6,8 +6,8 @@ const bigPicture = document.querySelector('.big-picture');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialComment = document.querySelector('.social__comment');
 const commentsLoaderButton = document.querySelector('.comments-loader');
-const showCommentCount = document.querySelector('.comment__comment-shown-count');
-const totalCommentCount = document.querySelector('.comment__comment-total-count');
+const showCommentCount = bigPicture.querySelector('.social__comment-shown-count');
+const totalCommentCount = bigPicture.querySelector('.social__comment-total-count');
 socialComments.innerHTML = ''; //для чистки встроенных li
 
 

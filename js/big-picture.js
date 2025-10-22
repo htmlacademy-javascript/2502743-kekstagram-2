@@ -17,8 +17,8 @@ const openBigPicture = (data) => {
   const { url,likes,comments,description } = data;
   bigPicture.querySelector('.big-picture__img img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
   bigPicture.querySelector('.social__comment-shown-count').textContent = comments.length;
+  bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
   renderComments(comments);
