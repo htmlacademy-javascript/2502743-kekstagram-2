@@ -9,15 +9,17 @@ const cancelButton = document.querySelector('.img-upload__cancel');
 const fileInput = document.querySelector('.img-upload__input');
 const effectsPreview = document.querySelectorAll('.effects__preview');
 const imgPreview = document.querySelector('.img-upload__preview img');
+const inputHashtags = form.querySelector('.text__hashtags');
 
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__wrapper',
-  errorTextParent: 'img-upload__wrapper',
-  errorTextClass: 'img-upload__wrapper--error',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 pristine.addValidator(
-  form.querySelector('.text-hashtags'),
-  validateHashtags(),
+  inputHashtags,
+  validateHashtags,
+  'Некозуктный хэштэг (максимум 5,формат: #пример, без повторов)'
 );
 
 const blockSubmitButton = () => {

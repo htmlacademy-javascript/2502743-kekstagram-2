@@ -1,10 +1,9 @@
-import { isEscapekey } from '/util';
+import { isEscapekey } from './util.js';
 import { renderComments,clearComments } from './render-comments';
 
 const body = document.body;
 const bigPicture = document.querySelector('.big-picture');
-const closeButton = bigPicture.querySelector('.big- picture__cancel');
-
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const onCloseButtonClick = () => closeBigPicture;
 
 const onDocumentKeydown = (evt) => {
@@ -22,12 +21,11 @@ const openBigPicture = (data) => {
   bigPicture.querySelector('.social__comment-shown-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  const commentsContainer = bigPicture.querySelector('.social__comment');
-  renderComments(comments, commentsContainer);
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  renderComments(comments);
+
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
+
   closeButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
 
