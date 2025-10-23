@@ -1,4 +1,4 @@
-import { renderThumbnails } from './thumbnail.js';
+import { renderThumbnails,clearThumbnails } from './thumbnail.js';
 import './zoom.js';
 import { initFilters } from'./filter.js';
 import './image-editor.js';
@@ -9,6 +9,7 @@ try {
   initForm();
   const photoData = await loadPhotos(renderThumbnails);
   renderThumbnails(photoData);
+  clearThumbnails(photoData);
 } catch {
   window.postMessage('ошибка загрузки файла');
 
