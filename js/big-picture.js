@@ -4,7 +4,7 @@ import { renderComments,clearComments } from './render-comments';
 const body = document.body;
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const onCloseButtonClick = () => closeBigPicture;
+const onCloseButtonClick = () => closeBigPicture();
 
 const onDocumentKeydown = (evt) => {
   if(isEscapekey(evt)) {

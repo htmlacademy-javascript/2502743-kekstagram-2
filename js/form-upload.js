@@ -12,14 +12,14 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const inputHashtags = form.querySelector('.text__hashtags');
 
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
+  classTo: 'img-upload__wrapper',
+  errorTextParent: 'img-upload__wrapper',
+  errorTextClass: 'img-upload__wrapper--error',
 });
 pristine.addValidator(
   inputHashtags,
   validateHashtags,
-  'Некозуктный хэштэг (максимум 5,формат: #пример, без повторов)'
+  'Некоректный хэштэг (максимум 5,формат: #пример, без повторов)'
 );
 
 const blockSubmitButton = () => {
