@@ -4,7 +4,7 @@ import { initFilters } from'./filter.js';
 import './image-editor.js';
 import { loadPhotos } from './api.js';
 import { initForm } from './form-upload.js';
-import { showErrorMessage,successButtonForm } from './util.js';
+import { showErrorMessage } from './util.js';
 initFilters(loadPhotos);
 try {
   initForm();
@@ -13,5 +13,5 @@ try {
   clearThumbnails(photoData);
 } catch {
   showErrorMessage();
-  successButtonForm();
+
 }

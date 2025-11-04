@@ -42,7 +42,7 @@
             <!-- Форма редактирования изображения -->
             <div class="img-upload__overlay  hidden">
               <div class="img-upload__wrapper">
-                <div class="img-upload__preview-img">
+                <div class="img-upload__preview-container">
 
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
@@ -86,7 +86,7 @@
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-sepia" value="sepia">
                       <label for="effect-sepia" class="effects__label">
-                        <span class="effects__preview  effects__preview--sepia">Превью эффекта Сепия</span>
+                        <span class="effects__preview  ebffects__preview--sepia">Превью эффекта Сепия</span>
                         Сепия
                       </label>
                     </li>
@@ -98,9 +98,9 @@
                       </label>
                     </li>
                     <li class="effects__item">
-                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-phobos" value="phobos">
-                      <label for="effect-phobos" class="effects__label">
-                        <span class="effects__preview  effects__preview--photos">Превью эффекта Фобос</span>
+                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-phobos" value="photos">
+                      <label for="effect-photos" class="effects__label">
+                        <span class="effects__preview  effects__preview--phobos">Превью эффекта Фобос</span>
                         Фобос
                       </label>
                     </li>
@@ -116,11 +116,11 @@
 
                 <!-- Добавление хэштегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
-                  <div class="img-upload__wrapper">
+                  <div class="img-upload__field-wrapper">
                     <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   </div>
-                  <div class="img-upload__wrapper">
-                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..." data-pristine-maxlength-message="140"></textarea>
+                  <div class="img-upload__field-wrapper">
+                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..." data-pristine-maxlength-message="не более 140 символов"></textarea>
                   </div>
                 </fieldset>
 
@@ -153,7 +153,7 @@
             <p class="social__caption">Тестим новую камеру! =)</p>
             <p class="social__likes">Нравится <span class="likes-count">356</span></p>
           </div>
-o
+
           <!-- Комментарии к изображению -->
           <div class="social__comment-count"><span class="social__comment-shown-count">5</span> из <span class="social__comment-total-count">125</span> комментариев</div>
           <ul class="social__comments">
@@ -211,7 +211,7 @@ o
   <!-- Сообщение с ошибкой загрузки изображения -->
   <template id="error">
     <section class="error">
-      <div class="inner">
+      <div class="error__inner">
         <h2 class="error__title">Ошибка загрузки файла</h2>
         <button type="button" class="error__button">Попробовать ещё раз</button>
       </div>

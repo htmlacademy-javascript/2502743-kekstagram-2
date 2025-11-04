@@ -1,6 +1,8 @@
 import { sendData } from '/js/api.js';
-import { showSuccessMessage, showErrorMessage } from '/js/util.js';
+import { showNotification } from '/js/util.js';
 import { validateHashtags } from './form-validation';
+import { resetEffects } from './image-editor';
+import { isEscapeKey } from './util';
 
 const form = document.querySelector('.img-upload__form');
 const submitButton = form.querySelector('.img-upload__submit');
@@ -10,11 +12,12 @@ const fileInput = document.querySelector('.img-upload__input');
 const effectsPreview = document.querySelectorAll('.effects__preview');
 const imgPreview = document.querySelector('.img-upload__preview img');
 const inputHashtags = form.querySelector('.text__hashtags');
+const inputDescription = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__wrapper',
-  errorTextParent: 'img-upload__wrapper',
-  errorTextClass: 'img-upload__wrapper--error',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper-error',
 });
 pristine.addValidator(
   inputHashtags,
@@ -38,16 +41,22 @@ const resetForm = () => {
   imgPreview.style.transform = 'scale(1)';
   imgPreview.className = 'effects__preview--none';
 };
-const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    closeForm();
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    if (document.activeElement === inputHashtags || document.activeElement === inputDescription) {
+      evt.stopPropagation();
+    } else {
+      closeForm();
+
+    }
   }
 };
 function closeForm() {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
   resetForm();
+  resetEffects();
 }
 
 const onCancelButtonClick = () => closeForm();
@@ -66,7 +75,7 @@ const onFileInputChange = (evt) => {
     reader.readAsDataURL(file);
     overlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
-    document.addEventListener('keydown', onEscKeydown);
+    document.addEventListener('keydown', onDocumentKeydown);
   }
 };
 
@@ -81,9 +90,9 @@ const onFormSubmit = async (evt) => {
     blockSubmitButton();
     await sendData(new FormData(form));
     closeForm();
-    showSuccessMessage();
+    showNotification('success');
   } catch (err) {
-    showErrorMessage(err.message);
+    showNotification('error');
   } finally {
     unblockSubmitButton();
   }

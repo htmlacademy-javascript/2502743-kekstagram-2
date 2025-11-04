@@ -1,6 +1,4 @@
 // image-editor.
-import {scaleImage} from './zoom.js';
-
 const EFFECTS = [
   { name: 'none', filter: 'none', min: 0, max: 100, step: 1, unit: '' },
   { name: 'chrome', filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '' },
@@ -10,16 +8,11 @@ const EFFECTS = [
   { name: 'heat', filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' }
 ];
 
-const uploadInput = document.querySelector('.img-upload__input');
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const previewImg = document.querySelector('.img-upload__preview-img');
-const cancelButton = document.querySelector('.img-upload__cancel');
+const previewImg = document.querySelector('.img-upload__preview img');
 const effectsContainer = document.querySelector('.img-upload__effects');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
-const textDescription = document.querySelector('.text__description');
-const textHashtags = document.querySelector('.text__hashtags');
 
 let currentEffect = EFFECTS[0];
 let slider;
@@ -43,80 +36,34 @@ const initSlider = () => {
 };
 
 // Сброс эффектов
-const resetEffects = () => {
+export const resetEffects = () => {
   currentEffect = EFFECTS[0];
   previewImg.style.filter = 'none';
   sliderContainer.classList.add('hidden');
-  if (slider) {
-    slider.destroy();
-  }
+
 };
-
-// Обработчик выбора файла
-uploadInput.addEventListener('change', () => {
-  const file = uploadInput.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-
-    reader.addEventListener('load', () => {
-      previewImg.src = reader.result;
-
-      // Обновляем превью во всех эффектах
-      document.querySelectorAll('.effects__preview').forEach((preview) => {
-        preview.style.backgroundImage = `url(${reader.result})`;
-      });
-
-      uploadOverlay.classList.remove('hidden');
-      document.body.classList.add('modal-open');
-
-      resetEffects();
-      initSlider();
-      scaleImage(100);
-    });
-
-    reader.readAsDataURL(file);
-  }
-});
-
-// Закрытие формы
-const closeForm = () => {
-  uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadInput.value = '';
-  textDescription.value = '';
-  textHashtags.value = '';
-  resetEffects();
-};
-
-// Обработчики закрытия
-cancelButton.addEventListener('click',() => {
-  closeForm();
-});
 
 // Обработчик выбора эффекта
 effectsContainer.addEventListener('change', (evt) => {
-  if (evt.target.matches('input[type="radio"]')) {
-    currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-    previewImg.className = `img-upload__preview-img--${currentEffect.name}`;
-
-    if (currentEffect.name === 'none') {
-      sliderContainer.classList.add('hidden');
-      previewImg.style.filter = 'none';
-    } else {
-      sliderContainer.classList.remove('hidden');
-      slider.updateOptions({
-        range: {
-          min: currentEffect.min,
-          max: currentEffect.max
-        },
-        step: currentEffect.step,
-        start: currentEffect.max
-      });
-    }
+  const currentButton = evt.target.closest('.effects__radio');
+  currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  previewImg.className = `img-upload__preview-img--${currentEffect.name}`;
+  currentButton.checked = true;
+  if (currentEffect.name === 'none') {
+    sliderContainer.classList.add('hidden');
+    previewImg.style.filter = 'none';
+  } else {
+    sliderContainer.classList.remove('hidden');
+    slider.updateOptions({
+      range: {
+        min: currentEffect.min,
+        max: currentEffect.max
+      },
+      step: currentEffect.step,
+      start: currentEffect.max
+    });
   }
-
-  // Устанавливаем оригинал по умолчанию
-  document.getElementById('effect-none').checked = true;
 
 });
 
+initSlider();

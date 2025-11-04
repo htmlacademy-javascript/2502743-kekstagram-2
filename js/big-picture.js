@@ -1,4 +1,4 @@
-import { isEscapekey } from './util.js';
+import { isEscapeKey } from './util.js';
 import { renderComments,clearComments } from './render-comments';
 
 const body = document.body;
@@ -7,7 +7,7 @@ const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const onCloseButtonClick = () => closeBigPicture();
 
 const onDocumentKeydown = (evt) => {
-  if(isEscapekey(evt)) {
+  if(isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }

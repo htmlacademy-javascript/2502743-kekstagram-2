@@ -1,8 +1,6 @@
 const TIMEOUT = 5000;
-const successTemplate = document.querySelector('#success').content;
-const errorTemplate = document.querySelector('#data-error').content;
-const successButton = document.querySelector('#button');
-const closeSuccessButton = document.querySelector('.success__button');
+const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+const body = document.body;
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
@@ -12,40 +10,40 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-const isEscapekey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-// Закрытие успешной отправки формы
-export const successButtonForm = () => {
-  successButton();
-  closeSuccessButton.addEventListener('click',() => {
-    successButtonForm(close);
-  });
+export const showNotification = (element, cbKeyDown) => {
+  const messageTemplate = document.querySelector(`#${element}`).content.querySelector(`.${element}`);
+  const messageContainer = messageTemplate.cloneNode(true);
+  const button = messageContainer.querySelector('button');
+  body.append(messageContainer);
 
-};
-
-// Декоратор для устранения дребезга
-export const showSuccessMessage = () => {
-  const successElement = successTemplate.cloneNode(true);
-  document.body.appendChild(successElement);
-  setTimeout(() => {
-    if (successElement && successElement.parentNode) {
-      successElement.remove();
+  function closeNotification (evt) {
+    evt.stopPropagation();
+    const hasElementTarget = [messageContainer,button].includes(evt.target);
+    if (hasElementTarget || isEscapeKey(evt)) {
+      messageContainer.remove();
+      body.removeEventListener('keydown',closeNotification);
+      body.removeEventListener('click',closeNotification);
+      if (element === 'error') {
+        document.addEventListener('keydown'.cbKeyDown);
+      }
     }
-  }, TIMEOUT);
+  }
 
+  button.addEventListener('click',closeNotification);
+  body.addEventListener('keydown',closeNotification);
+  body.addEventListener('click',closeNotification);
 };
 
-export const showErrorMessage = (message) => {
+export const showErrorMessage = () => {
   const errorElement = errorTemplate.cloneNode(true);
-  errorElement.querySelector('error-title').showErrorMessage = message;
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
-    if (errorElement && errorElement.parentNode) {
-      errorElement.remove();
-    }
-  }, TIMEOUT);
+    errorElement.remove();
+  },TIMEOUT);
 
 };
 
-export { debounce, isEscapekey };
+export { debounce, isEscapeKey };
