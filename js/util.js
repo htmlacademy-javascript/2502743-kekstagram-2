@@ -26,7 +26,7 @@ export const showNotification = (element, cbKeyDown) => {
       body.removeEventListener('keydown',closeNotification);
       body.removeEventListener('click',closeNotification);
       if (element === 'error') {
-        document.addEventListener('keydown'.cbKeyDown);
+        document.addEventListener('keydown',cbKeyDown);
       }
     }
   }

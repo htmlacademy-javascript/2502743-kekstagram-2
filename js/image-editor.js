@@ -47,7 +47,6 @@ export const resetEffects = () => {
 effectsContainer.addEventListener('change', (evt) => {
   const currentButton = evt.target.closest('.effects__radio');
   currentEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  previewImg.className = `img-upload__preview-img--${currentEffect.name}`;
   currentButton.checked = true;
   if (currentEffect.name === 'none') {
     sliderContainer.classList.add('hidden');
