@@ -1,76 +1,65 @@
-import { debounce } from './util';
+import { renderThumbnails } from './thumbnail';
+import { debounce } from './util.js';
 
-// Функция перемешивания массива
-const shuffleArray = (array) => {
-  const shuffled = array.slice();
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+const filter = {
+  DEFOULT: 'filter-defoult',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+
 };
 
-const onFilterChange = debounce((photos, filterType, renderPhotos) => {
-  // Проверяем, что photos является массивом
-  if (!Array.isArray(photos)) {
+const sortFunction = {
+  RANDOM: () => 0.5 - Math.random(),
+  DISCUSSED: (a,b) => b.comments.length - a.comments.length
+
+};
+
+const MAX_PICTURES_COUNT = 10;
+
+let currentFilter = filter.DEFOULT;
+let pictures = [];
+const filterContainer = document.querySelector('.img-filters');
+const filterForm = filterContainer.querySelector('.img-filters__form');
+const activeButtonClass = 'img-filters__button--active';
+const debounceRender = debounce(renderThumbnails);
+
+const applyFilter = () => {
+  let filteredPictures = [];
+  switch (currentFilter) {
+    case '$ {Filter.DEFOULT}':
+      filteredPictures = pictures;
+      break;
+
+    case '$ {Filter.RANDOM}':
+      filteredPictures = pictures.toSorted(sortFunction.RANDOM).slice(0,MAX_PICTURES_COUNT);
+      break;
+
+    case '$ {Filter.DISCUSSED}':
+      filteredPictures = pictures.toSorted(sortFunction.DISCUSSED);
+      break;
+  }
+  debounceRender(filteredPictures);
+};
+
+//функция перемешивания массиваю
+const onFilterChange = (evt) => {
+  const targetButton = evt.target;
+  const activeButton = filterContainer.querySelector('${activeButtonClass');
+  if (activeButton === targetButton) {
     return;
   }
-
-  // Создаем копию массива с проверкой
-  let filteredPhotos = Array.isArray(photos) ? [...photos] : [];
-
-  switch (filterType) {
-    case 'random':
-      filteredPhotos = shuffleArray(filteredPhotos).slice(0, 10);
-      break;
-    case 'discussed':
-      filteredPhotos.sort((a, b) => (b.comments?.length || 0) - (a.comments?.length || 0));
-      break;
-    default:
-      // Для других фильтров оставляем исходный массив
-      break;
-  }
-
-  const picturesContainer = document.querySelector('.pictures');
-  if (picturesContainer) {
-    const pictures = picturesContainer.querySelectorAll('.picture');
-    pictures.forEach((picture) => picture.remove());
-  }
-
-  renderPhotos(filteredPhotos);
-});
-
-// Инициализация фильтров
-const initFilters = (photos, renderPhotos) => {
-  const filtersContainer = document.querySelector('.img-filters');
-  const filtersForm = filtersContainer.querySelector('.img-filters__form');
-  const defaultFilter = filtersContainer.querySelector('#filter-default');
-
-  filtersContainer.classList.remove('img-filters--inactive');
-  defaultFilter.classList.add('img-filters__button--active');
-
-  filtersForm.addEventListener('click', (evt) => {
-    const selectedFilter = evt.target.closest('.img-filters__button');
-    if (!selectedFilter) {
-      return;
-    }
-
-    const activeFilter = filtersForm.querySelector('.img-filters__button--active');
-    activeFilter.classList.remove('img-filters__button--active');
-    selectedFilter.classList.add('img-filters__button--active');
-
-    onFilterChange(photos, selectedFilter.id.replace('filter-', ''), renderPhotos);
-  });
+  activeButton.classList.toogle(activeButtonClass);
+  targetButton.classList.toogle(activeButtonClass);
+  currentFilter = targetButton.getAtribute('id');
+  applyFilter();
 };
 
-export const applyFilters = (photos) => {
-  // Проверяем, что photos существует и является массивом
-  if (!photos || !Array.isArray(photos)) {
-    return []; // или throw new Error('Photos data is not available');
-  }
-
-  // Теперь безопасно используем slice
-  return photos.slice().sort(/* ваша логика сортировки */);
+const configFilter = (pictureData) => {
+  filterContainer.class('img-filters -- inactive');
+  pictures = pictureData;
+  filterForm.addEventListener('click',onFilterChange);
 };
 
-export { initFilters };
+
+export { configFilter };
+

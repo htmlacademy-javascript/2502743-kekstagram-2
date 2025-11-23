@@ -18,6 +18,7 @@ let currentEffect = EFFECTS[0];
 let slider;
 // Инициализация слайдера
 const initSlider = () => {
+  sliderContainer.classList.add('hidden');
   slider = noUiSlider.create(sliderElement, {
     range: {
       min: currentEffect.min,

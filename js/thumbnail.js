@@ -1,4 +1,4 @@
-import { openBigPicture,closeBigPicture } from './big-picture.js/';
+import { openBigPicture } from './big-picture.js/';
 
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
@@ -19,6 +19,7 @@ const createThumbnail = ({ url, description, likes, comments }) => {
 };
 
 const renderThumbnails = (photos) => {
+  container.querySelectorAll('a.picture').forEach((item) => item.remove());
   const fragment = document.createDocumentFragment();
   photos.forEach((photo) => {
     const thumbnail = createThumbnail(photo);
@@ -28,12 +29,4 @@ const renderThumbnails = (photos) => {
 
 };
 
-const clearThumbnails = () => {
-  thumbnailTemplate.querySelectorAll('.picture').forEach((thumbnailElement) => {
-    thumbnailElement.remove();
-    closeBigPicture();
-  });
-};
-
-
-export { renderThumbnails,clearThumbnails };
+export { renderThumbnails };
