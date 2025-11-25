@@ -1,22 +1,20 @@
-import { renderThumbnails } from './thumbnail';
-import { debounce } from './util.js';
+import { debounce } from './util';
+import {renderThumbnails} from './thumbnail';
 
-const filter = {
-  DEFOULT: 'filter-defoult',
+const Filter = {
+  DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
-  DISCUSSED: 'filter-discussed'
-
+  DISCUSSED:'filter-discussed'
 };
 
-const sortFunction = {
+const SortFunction = {
   RANDOM: () => 0.5 - Math.random(),
   DISCUSSED: (a,b) => b.comments.length - a.comments.length
-
 };
 
-const MAX_PICTURES_COUNT = 10;
+const MAX_PICTURE_COUNT = 10;
 
-let currentFilter = filter.DEFOULT;
+let currentFilter = Filter.DEFAULT;
 let pictures = [];
 const filterContainer = document.querySelector('.img-filters');
 const filterForm = filterContainer.querySelector('.img-filters__form');
@@ -24,42 +22,42 @@ const activeButtonClass = 'img-filters__button--active';
 const debounceRender = debounce(renderThumbnails);
 
 const applyFilter = () => {
+
   let filteredPictures = [];
+
   switch (currentFilter) {
-    case '$ {Filter.DEFOULT}':
+    case `${Filter.DEFAULT}`:
       filteredPictures = pictures;
       break;
 
-    case '$ {Filter.RANDOM}':
-      filteredPictures = pictures.toSorted(sortFunction.RANDOM).slice(0,MAX_PICTURES_COUNT);
+    case `${Filter.RANDOM}`:
+      filteredPictures = pictures.toSorted(SortFunction.RANDOM).slice(0, MAX_PICTURE_COUNT);
       break;
 
-    case '$ {Filter.DISCUSSED}':
-      filteredPictures = pictures.toSorted(sortFunction.DISCUSSED);
+    case `${Filter.DISCUSSED}`:
+      filteredPictures = pictures.toSorted(SortFunction.DISCUSSED);
       break;
   }
   debounceRender(filteredPictures);
 };
 
-//функция перемешивания массиваю
+// Функция перемешивания массива
 const onFilterChange = (evt) => {
   const targetButton = evt.target;
-  const activeButton = filterContainer.querySelector('${activeButtonClass');
+  const activeButton = filterContainer.querySelector(`.${activeButtonClass}`);
   if (activeButton === targetButton) {
     return;
   }
-  activeButton.classList.toogle(activeButtonClass);
-  targetButton.classList.toogle(activeButtonClass);
-  currentFilter = targetButton.getAtribute('id');
+  activeButton.classList.toggle(activeButtonClass);
+  targetButton.classList.toggle(activeButtonClass);
+  currentFilter = targetButton.getAttribute('id');
   applyFilter();
 };
 
-const configFilter = (pictureData) => {
-  filterContainer.class('img-filters -- inactive');
-  pictures = pictureData;
-  filterForm.addEventListener('click',onFilterChange);
+const configFilter = (picturesData) => {
+  filterContainer.classList.remove('img-filters--inactive');
+  pictures = picturesData;
+  filterForm.addEventListener('click', onFilterChange);
 };
 
-
 export { configFilter };
-
