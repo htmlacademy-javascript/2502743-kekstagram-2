@@ -1,22 +1,17 @@
 import { renderThumbnails } from './thumbnail.js';
-import { initValidation } from './form-validation.js';
 import './zoom.js';
-import {initFilters,applyFilters} from'./filter.js';
 import './image-editor.js';
+import { configFilter } from './filter.js';
 import { loadPhotos } from './api.js';
 import { initForm } from './form-upload.js';
-const filterContainer = document.querySelector('.img-filters');
+import { showErrorMessage } from './util.js';
 
 try {
-  const photoData = await loadPhotos();
+  initForm();
+  const photoData = await loadPhotos(renderThumbnails);
   renderThumbnails(photoData);
-  filterContainer.classList.remove('img-filters--inactive');
-  applyFilters(photoData);
+  configFilter(photoData);
 } catch {
-  //console.error('ошибка загрузки фотографий');
+  showErrorMessage();
 
 }
-
-initValidation();
-initForm();
-initFilters();
