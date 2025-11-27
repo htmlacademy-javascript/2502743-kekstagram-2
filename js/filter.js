@@ -1,63 +1,85 @@
-import { debounce } from './util';
-import {renderThumbnails} from './thumbnail';
-
-const Filter = {
-  DEFAULT: 'filter-default',
-  RANDOM: 'filter-random',
-  DISCUSSED:'filter-discussed'
-};
-
-const SortFunction = {
-  RANDOM: () => 0.5 - Math.random(),
-  DISCUSSED: (a,b) => b.comments.length - a.comments.length
-};
-
-const MAX_PICTURE_COUNT = 10;
-
-let currentFilter = Filter.DEFAULT;
-let pictures = [];
-const filterContainer = document.querySelector('.img-filters');
-const filterForm = filterContainer.querySelector('.img-filters__form');
-const activeButtonClass = 'img-filters__button--active';
-const debounceRender = debounce(renderThumbnails);
-
-const applyFilter = () => {
-
-  let filteredPictures = [];
-
-  switch (currentFilter) {
-    case `${Filter.DEFAULT}`:
-      filteredPictures = pictures;
-      break;
-
-    case `${Filter.RANDOM}`:
-      filteredPictures = pictures.toSorted(SortFunction.RANDOM).slice(0, MAX_PICTURE_COUNT);
-      break;
-
-    case `${Filter.DISCUSSED}`:
-      filteredPictures = pictures.toSorted(SortFunction.DISCUSSED);
-      break;
-  }
-  debounceRender(filteredPictures);
+// Декоратор для устранения дребезга
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
 };
 
 // Функция перемешивания массива
-const onFilterChange = (evt) => {
-  const targetButton = evt.target;
-  const activeButton = filterContainer.querySelector(`.${activeButtonClass}`);
-  if (activeButton === targetButton) {
+const shuffleArray = (array) => {
+  const shuffled = array.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+// Обработчик изменения фильтра
+//
+const onFilterChange = debounce((photos, filterType, renderPhotos) => {
+  // Проверяем, что photos является массивом
+  if (!Array.isArray(photos)) {
     return;
   }
-  activeButton.classList.toggle(activeButtonClass);
-  targetButton.classList.toggle(activeButtonClass);
-  currentFilter = targetButton.getAttribute('id');
-  applyFilter();
+
+  // Создаем копию массива с проверкой
+  let filteredPhotos = Array.isArray(photos) ? [...photos] : [];
+
+  switch (filterType) {
+    case 'random':
+      filteredPhotos = shuffleArray(filteredPhotos).slice(0, 10);
+      break;
+    case 'discussed':
+      filteredPhotos.sort((a, b) => (b.comments?.length || 0) - (a.comments?.length || 0));
+      break;
+    default:
+      // Для других фильтров оставляем исходный массив
+      break;
+  }
+
+  const picturesContainer = document.querySelector('.pictures');
+  if (picturesContainer) {
+    const pictures = picturesContainer.querySelectorAll('.picture');
+    pictures.forEach((picture) => picture.remove());
+  }
+
+  renderPhotos(filteredPhotos);
+});
+
+// Инициализация фильтров
+const initFilters = (photos, renderPhotos) => {
+  const filtersContainer = document.querySelector('.img-filters');
+  const filtersForm = filtersContainer.querySelector('.img-filters__form');
+  const defaultFilter = filtersContainer.querySelector('#filter-default');
+
+  filtersContainer.classList.remove('img-filters--inactive');
+  defaultFilter.classList.add('img-filters__button--active');
+
+  filtersForm.addEventListener('click', (evt) => {
+    const selectedFilter = evt.target.closest('.img-filters__button');
+    if (!selectedFilter) {
+      return;
+    }
+
+    const activeFilter = filtersForm.querySelector('.img-filters__button--active');
+    activeFilter.classList.remove('img-filters__button--active');
+    selectedFilter.classList.add('img-filters__button--active');
+
+    onFilterChange(photos, selectedFilter.id.replace('filter-', ''), renderPhotos);
+  });
 };
 
-const configFilter = (picturesData) => {
-  filterContainer.classList.remove('img-filters--inactive');
-  pictures = picturesData;
-  filterForm.addEventListener('click', onFilterChange);
+export const applyFilters = (photos) => {
+  // Проверяем, что photos существует и является массивом
+  if (!photos || !Array.isArray(photos)) {
+    return []; // или throw new Error('Photos data is not available');
+  }
+
+  // Теперь безопасно используем slice
+  return photos.slice().sort(/* ваша логика сортировки */);
 };
 
-export { configFilter };
+export {initFilters};
