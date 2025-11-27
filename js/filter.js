@@ -1,4 +1,11 @@
-import { debounce } from './util';
+// Декоратор для устранения дребезга
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 // Функция перемешивания массива
 const shuffleArray = (array) => {
