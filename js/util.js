@@ -1,37 +1,49 @@
-function getRandomInteger(min, max) {
-  return Math.floor(Math.random()
-    * (max - min + 1)) + min;
-}
-
-function getRandomArrayElement(elements) {
-  return elements[getRandomInteger(0, elements.length - 1)];
-}
-
-const successTemplate = document.querySelector('#success').content;
-const errorTemplate = document.querySelector('#error').content;
 const TIMEOUT = 5000;
+const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+const body = document.body;
 
-export const showSuccessMessage = () => {
-  const successElement = successTemplate.cloneNode(true);
-  document.body.appendChild(successElement);
-  setTimeout(() => {
-    successElement.remove();
-  }, TIMEOUT);
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
 };
 
-export const showErrorMessage = (message) => {
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export const showNotification = (element, cbKeyDown) => {
+  const messageTemplate = document.querySelector(`#${element}`).content.querySelector(`.${element}`);
+  const messageContainer = messageTemplate.cloneNode(true);
+  const button = messageContainer.querySelector('button');
+  body.append(messageContainer);
+
+  function closeNotification (evt) {
+    evt.stopPropagation();
+    const hasElementTarget = [messageContainer,button].includes(evt.target);
+    if (hasElementTarget || isEscapeKey(evt)) {
+      messageContainer.remove();
+      body.removeEventListener('keydown',closeNotification);
+      body.removeEventListener('click',closeNotification);
+      if (element === 'error') {
+        document.addEventListener('keydown',cbKeyDown);
+      }
+    }
+  }
+
+  button.addEventListener('click',closeNotification);
+  body.addEventListener('keydown',closeNotification);
+  body.addEventListener('click',closeNotification);
+};
+
+export const showErrorMessage = () => {
   const errorElement = errorTemplate.cloneNode(true);
-  errorElement.querySelector('.error__tittle').textContent = message;
   document.body.appendChild(errorElement);
 
   setTimeout(() => {
     errorElement.remove();
-  }, TIMEOUT);
+  },TIMEOUT);
+
 };
 
-export { getRandomInteger, getRandomArrayElement };
-
-export const closeModal = (element) => {
-  element.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
+export { debounce, isEscapeKey };
